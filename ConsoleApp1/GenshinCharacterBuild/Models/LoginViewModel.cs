@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace GenshinCharacterBuild.Models
 {
+
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Username is required")]
