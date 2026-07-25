@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null; // Walang navbar/footer
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -18,16 +18,13 @@
     <div class="login-wrapper">
         <div class="login-card">
 
-            <!-- Left Banner Image -->
             <div class="login-banner">
                 <img src="~/images/genshin-left-panel.jpg" alt="Genshin Landscape" class="img-fluid" />
             </div>
 
-            <!-- Right Form -->
             <div class="login-form-container">
                 <h2 class="login-title">Login</h2>
 
-                <!-- ERROR MESSAGE -->
                 @if (ViewBag.ErrorMessage != null)
                 {
                     <div class="alert alert-danger py-2 text-center mb-3" style="font-size: 0.85rem; border-radius: 8px;">
@@ -36,9 +33,12 @@
                 }
 
                 <form asp-controller="Account" asp-action="Login" method="post">
+                    <!-- Hidden field to preserve returnUrl if redirected from a protected page -->
+                    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
                     <div class="mb-3 text-start">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" value="@ViewBag.EnteredEmail" class="form-control custom-input" placeholder="Enter your email" required />
+                        <label class="form-label">Email / Username</label>
+                        <input type="text" name="email" value="@ViewBag.EnteredEmail" class="form-control custom-input" placeholder="Enter your email or username" required />
                     </div>
 
                     <div class="mb-2 text-start">
