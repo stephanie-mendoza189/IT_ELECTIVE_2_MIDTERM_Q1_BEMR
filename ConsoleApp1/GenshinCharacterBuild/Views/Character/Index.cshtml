@@ -1,0 +1,61 @@
+﻿@model IEnumerable<GenshinCharacterBuild.Models.Character>
+
+@{
+    ViewData["Title"] = "Character Builds";
+}
+
+<div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <h2>Genshin Impact Top Tier Builds</h2>
+
+    <!-- Logout button to test the authentication flow -->
+    <form asp-controller="Account" asp-action="Logout" method="post">
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+    </form>
+</div>
+
+<!-- Reusable local function to generate a table for a specific role -->
+@{
+    void RenderRoleTable(string roleTitle, string roleFilter, string headerColorClass)
+    {
+        var filteredCharacters = Model.Where(c => c.Role == roleFilter).ToList();
+
+        <div class="card mb-5 shadow-sm">
+            <div class="card-header @headerColorClass text-white">
+                <h4 class="mb-0">@roleTitle</h4>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Element</th>
+                            <th>Best Weapon</th>
+                            <th>Best Artifact Set</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var character in filteredCharacters)
+                        {
+                            <tr>
+                                <td class="fw-bold">@character.Name</td>
+                                <td>
+                                    <!-- A small badge for the element type -->
+                                    <span class="badge bg-secondary">@character.Element</span>
+                                </td>
+                                <td>@character.BestWeapon</td>
+                                <td>@character.BestArtifact</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+
+<!-- Render the tables using the local function defined above -->
+@{
+    RenderRoleTable("Main DPS", "Main DPS", "bg-danger"); // Red header for DPS
+    RenderRoleTable("Sub-DPS", "Sub-DPS", "bg-info text-dark"); // Light blue header for Sub-DPS
+    RenderRoleTable("Support", "Support", "bg-success"); // Green header for Support
+}
