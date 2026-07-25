@@ -9,5 +9,7 @@
         public string Description { get; set; } = string.Empty;
         public string BestWeapon { get; set; } = string.Empty;
         public string BestArtifact { get; set; } = string.Empty;
+
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }
