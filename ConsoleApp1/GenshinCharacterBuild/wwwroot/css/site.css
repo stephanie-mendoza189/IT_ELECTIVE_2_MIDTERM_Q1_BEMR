@@ -1,31 +1,168 @@
-html {
-  font-size: 14px;
+
+.login-body {
+    background-color: #ebf4ec; 
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.login-wrapper {
+    padding: 20px;
+    width: 100%;
+    max-width: 850px;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.login-card {
+    background: #ffffff;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.login-banner {
+    flex: 1;
+    padding: 16px;
+    background-color: #ebf4ec; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-body {
-  margin-bottom: 60px;
+    .login-banner img {
+        border-radius: 18px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.login-form-container {
+    flex: 1;
+    padding: 40px 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.login-title {
+    color: #2d8a56; 
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 25px;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin-bottom: 4px;
+}
+
+.custom-input {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    background-color: #ffffff;
+}
+
+    .custom-input:focus {
+        border-color: #2d8a56;
+        box-shadow: 0 0 0 0.2rem rgba(45, 138, 86, 0.2);
+    }
+
+.forgot-password {
+    color: #a0aec0;
+    font-size: 0.8rem;
+    text-decoration: underline;
+}
+
+    .forgot-password:hover {
+        color: #2d8a56;
+    }
+
+.custom-btn {
+    background-color: #2d8a56; 
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 600;
+    width: 100%;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+    .custom-btn:hover {
+        background-color: #236e44;
+        color: white;
+    }
+
+.divider {
+    margin: 25px 0 15px;
+    position: relative;
+    text-align: center;
+}
+
+    .divider::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #edf2f7;
+        z-index: 1;
+    }
+
+    .divider span {
+        background: #fff;
+        padding: 0 12px;
+        position: relative;
+        z-index: 2;
+        color: #a0aec0;
+        font-size: 0.8rem;
+    }
+
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.social-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #edf2f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+    .social-btn:hover {
+        background-color: #f7fafc;
+        border-color: #cbd5e0;
+    }
+
+.presented-by {
+    font-size: 0.8rem;
+    color: #cbd5e0;
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
+    }
+
+    .login-banner {
+        display: none;
+    }
 }
