@@ -1,44 +1,75 @@
-﻿@model GenshinCharacterBuild.Models.LoginViewModel
-
-@{
-    ViewData["Title"] = "Login";
+﻿@{
+    Layout = null;
 }
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-4">
-        <h2 class="text-center mb-4">Genshin Database Login</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Genshin Character Build</title>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form asp-controller="Account" asp-action="Login" method="post">
-                    <!-- Hidden field to remember where the user was trying to go -->
-                    <input type="hidden" asp-for="ReturnUrl" value="@ViewData["ReturnUrl"]" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="login-body">
 
-                    <!-- Display overall validation errors (e.g., "Invalid login attempt") -->
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="login-wrapper">
+        <div class="login-card">
 
-                    <div class="form-group mb-3">
-                        <label asp-for="Username" class="form-label"></label>
-                        <input asp-for="Username" class="form-control" placeholder="Enter username" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-4">
-                        <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" class="form-control" placeholder="Enter password" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
-                </form>
+            <div class="login-banner">
+                <img src="~/images/genshin-left-panel.jpg" alt="Genshin Landscape" class="img-fluid" />
             </div>
+
+            <div class="login-form-container">
+                <h2 class="login-title">Login</h2>
+
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger py-2 text-center mb-3" style="font-size: 0.85rem; border-radius: 8px;">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+
+                <form asp-controller="Account" asp-action="Login" method="post">
+                    <!-- Hidden field to preserve returnUrl if redirected from a protected page -->
+                    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
+                    <div class="mb-3 text-start">
+                        <label class="form-label">Email / Username</label>
+                        <input type="text" name="email" value="@ViewBag.EnteredEmail" class="form-control custom-input" placeholder="Enter your email or username" required />
+                    </div>
+
+                    <div class="mb-2 text-start">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control custom-input" placeholder="Enter your password" required />
+                    </div>
+
+                    <div class="text-end mb-4">
+                        <a href="#" class="forgot-password">forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn custom-btn">Log in</button>
+                </form>
+
+                <div class="divider">
+                    <span>or continue with</span>
+                </div>
+
+                <div class="social-login">
+                    <a href="#" class="social-btn"><i class="fab fa-google text-danger"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f text-primary"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-apple text-dark"></i></a>
+                </div>
+
+                <div class="presented-by">
+                    <span>presented by <strong>GenshinBuilds</strong></span>
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
 
-<!-- Enable client-side validation without a full page reload -->
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+</body>
+</html>

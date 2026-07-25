@@ -16,32 +16,23 @@ namespace GenshinCharacterBuild.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(string email, string password, string? returnUrl = null)
         {
-            if (!ModelState.IsValid)
+            // Accept either "Admin" or a dummy email like "admin@genshin.com" with password "Paimon123!"
+            if ((email == "Admin" || email == "admin@genshin.com") && password == "Paimon123!")
             {
-                return View(model);
-            }
-
-            // In a production application, validate against your database here.
-            // For demonstration, we are using a hardcoded check.
-            if (model.Username == "Admin" && model.Password == "Paimon123!")
-            {
-                // 1. Create the user's claims (attributes about the user)
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, model.Username),
-                    new Claim(ClaimTypes.Role, "Admin") // You can map Staff/Admin roles here
+                    new Claim(ClaimTypes.Name, email),
+                    new Claim(ClaimTypes.Role, "Admin")
                 };
 
-                // 2. Create an identity based on those claims
                 var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                // 3. Issue the encrypted authentication cookie
                 var authProperties = new AuthenticationProperties
                 {
-                    IsPersistent = true, // Keeps the user logged in across browser sessions
+                    IsPersistent = true,
                     ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2)
                 };
 
@@ -50,24 +41,24 @@ namespace GenshinCharacterBuild.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                // Redirect to the originally requested page, or default to the Character index
-                if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 {
-                    return Redirect(model.ReturnUrl);
+                    return Redirect(returnUrl);
                 }
 
                 return RedirectToAction("Index", "Character");
             }
 
-            // If login fails, display an error message
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return View(model);
+            // Pass error message and retain the entered email in the view
+            ViewBag.ErrorMessage = "Invalid email or password.";
+            ViewBag.EnteredEmail = email;
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            // Destroys the authentication cookie
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
