@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GenshinCharacterBuild.Controllers
 {
-    // This attribute secures all actions inside this controller
     [Authorize]
     public class CharacterController : Controller
     {
